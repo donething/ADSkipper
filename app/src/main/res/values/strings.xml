@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ADSkipper</string>
+    <string name="title_home">主页</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_settings">设置</string>
+
+    <string name="accessibility_desc">跳过应用的启动广告</string>
+    <string name="app_icon_desc">应用图标</string>
+    <string name="log_scroll_down_text">滚动到最下</string>
+    <string name="log_scroll_top_text">滚动到最上</string>
+    <string name="log_sw_unique_text">去除重复项</string>
+    <string name="title_logs">日志</string>
+</resources>
