@@ -4,11 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Settings
 import android.text.TextUtils
+import android.view.accessibility.AccessibilityNodeInfo
 import net.donething.android.adskipper.utils.Debug
 
 // 辅助功能
 // 参考：https://blog.csdn.net/qq_32115439/article/details/80261568
 object AccessibilityUtil {
+    private val TAG = AccessibilityUtil::class.java.name
+
     /**
      * 检查系统设置：是否开启辅助服务
      * @param service 辅助服务
@@ -28,7 +31,7 @@ object AccessibilityUtil {
                 }
             }
         } catch (e: Throwable) {//若出现异常，则说明该手机设置被厂商篡改了,需要适配
-            Debug.log(Debug.E, "检测是否打开无障碍功能时出错：$e")
+            Debug.log(Debug.E, TAG, "检测是否打开无障碍功能时出错：$e")
         }
         return false
     }
@@ -47,9 +50,20 @@ object AccessibilityUtil {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 ctx.startActivity(intent)
             } catch (e2: Throwable) {
-                Debug.log(Debug.E, "跳转到无障碍功能界面时出错：$e")
+                Debug.log(Debug.E, TAG, "跳转到无障碍功能界面时出错：$e")
             }
-
         }
+    }
+
+    /**
+     * 向上查找可点击的控件，并点击
+     */
+    fun clickClickable(node: AccessibilityNodeInfo?): Boolean {
+        node ?: return false
+        if (node.isClickable) {
+            node.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+            return true
+        }
+        return clickClickable(node.parent)
     }
 }

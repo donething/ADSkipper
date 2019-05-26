@@ -2,11 +2,15 @@ package net.donething.android.adskipper.utils
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import net.donething.android.adskipper.entity.AppInfo
+import android.widget.Toast
+import net.donething.android.adskipper.BuildConfig
+import net.donething.android.adskipper.MyApp
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -51,32 +55,6 @@ object Utils {
     }
 
     /**
-     * 获取已安装应用列表
-     */
-    fun scanInstalledApps(ctx: Context): List<AppInfo> {
-        val pm = ctx.packageManager
-        val appInfos = ArrayList<AppInfo>()
-        try {
-            val packageInfos = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES)
-            for (info in packageInfos) {
-                //过滤掉系统app
-                if (isSysApp(info.applicationInfo)) continue
-                val appInfo = AppInfo(
-                    info.packageName,
-                    info.applicationInfo.loadIcon(pm),
-                    getAppLabel(ctx, info.packageName),
-                    pm.getLaunchIntentForPackage(info.packageName)?.component?.className ?: "未知的包名：${info.packageName}"
-                )
-                appInfos.add(appInfo)
-            }
-        } catch (t: Throwable) {
-            Debug.log(Debug.E, "获取应用列表出错")
-        }
-
-        return appInfos
-    }
-
-    /**
      * dp转px
      * ImageView的maxWidth默认单位为px，要设置dp的值，需要先调用此方法转换
      * 参考：https://stackoverflow.com/a/35803372/8179418
@@ -89,7 +67,17 @@ object Utils {
     /**
      * 格式化时间
      */
-    fun dateString(date: Date = Date()): String {
-        return SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(date)
+    fun dateString(date: Date = Date(), formatter: String = "yyyy-MM-dd HH:mm:ss"): String {
+        return SimpleDateFormat(formatter, Locale.getDefault()).format(date)
+    }
+
+    /**
+     * 复制文本到剪贴板
+     */
+    fun copyText(text: String, label: String = BuildConfig.APPLICATION_ID) {
+        val cm = MyApp.app.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val mClipData = ClipData.newPlainText(label, text)
+        cm.primaryClip = mClipData
+        Toast.makeText(MyApp.app, "已复制到剪贴板", Toast.LENGTH_SHORT).show()
     }
 }

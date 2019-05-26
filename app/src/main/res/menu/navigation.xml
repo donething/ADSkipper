@@ -6,9 +6,9 @@
             android:title="@string/title_logs"/>
 
     <item
-            android:id="@+id/navigation_dashboard"
-            android:icon="@drawable/ic_dashboard_black_24dp"
-            android:title="@string/title_dashboard"/>
+            android:id="@+id/navigation_apps"
+            android:icon="@drawable/ic_apps_black_24dp"
+            android:title="@string/title_apps"/>
 
     <item
             android:id="@+id/navigation_settings"

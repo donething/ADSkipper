@@ -8,34 +8,64 @@
     <ListView
             android:id="@+id/lvLog"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/llCtr">
+            app:layout_constraintBottom_toBottomOf="parent">
     </ListView>
 
     <LinearLayout
             android:id="@+id/llCtr"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/lvLog"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
-        <Button
-                android:id="@+id/bnLogScrollDown"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/log_scroll_down_text"/>
-        <Button
+        <!-- 箭头图标来源：https://www.iconfont.cn/collections/detail?spm=a313x.7781069.1998910419.d9df05512&cid=5673 -->
+        <ImageButton
                 android:id="@+id/bnLogScrollUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/log_scroll_top_text"/>
+                android:padding="@dimen/margin_inner_5"
+                android:contentDescription="@string/log_scroll_down_text"
+                android:src="@drawable/ic_log_scroll_top_32dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                style="@style/Widget.AppCompat.ImageButton"/>
+
+        <ImageButton
+                android:id="@+id/bnLogCopy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_outer_10"
+                android:padding="@dimen/margin_inner_5"
+                android:contentDescription="@string/log_copy_desc"
+                android:src="@drawable/ic_log_copy_32dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                style="@style/Widget.AppCompat.ImageButton"/>
+
+        <ImageButton
+                android:id="@+id/bnLogDel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_outer_10"
+                android:padding="@dimen/margin_inner_5"
+                android:contentDescription="@string/log_clear_desc"
+                android:src="@drawable/ic_log_del_32dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                style="@style/Widget.AppCompat.ImageButton"/>
+
+        <ImageButton
+                android:id="@+id/bnLogScrollDown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_outer_10"
+                android:padding="@dimen/margin_inner_5"
+                android:contentDescription="@string/log_scroll_top_text"
+                android:src="@drawable/ic_log_scroll_bottom_32dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                style="@style/Widget.AppCompat.ImageButton"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

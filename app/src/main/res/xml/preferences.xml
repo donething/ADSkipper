@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+            android:key="debug_mode"
+            android:title="调试模式"
+            android:summary="原本只匹配TextView控件的广告文本，开启后，将匹配所有类型的控件的文本"
+            android:defaultValue="false"
+            app:iconSpaceReserved="false"/>
+</PreferenceScreen>
