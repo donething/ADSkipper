@@ -24,7 +24,7 @@ object LaunchAD {
             return
         }
 
-        LaunchAD.findClickText(nodeInfo)
+        findClickText(nodeInfo)
     }
 
     /**
@@ -49,7 +49,8 @@ object LaunchAD {
             if (Regex("""(${Constants.AD_TEXT})""").matches(text) ||
                 Regex("""(${Constants.AD_TEXT})\d""").matches(text) ||
                 Regex("""\d(${Constants.AD_TEXT})""").matches(text) ||
-                Regex("""(${Constants.AD_TEXT})\d(${Constants.AD_UNIT})""").matches(text)
+                Regex("""(${Constants.AD_TEXT})\d(${Constants.AD_UNIT})""").matches(text) ||
+                Regex("""(${Constants.AD_TEXT})\(\d\)""").matches(text)
             ) {
                 val label = Utils.getAppLabel(MyApp.app, node.packageName)
                 val time = Utils.dateString(formatter = "MM-dd HH:mm:ss")
