@@ -2,11 +2,9 @@ package net.donething.android.adskipper.accessibility
 
 import android.accessibilityservice.AccessibilityService
 import android.view.accessibility.AccessibilityEvent
-import net.donething.android.adskipper.BuildConfig
 import net.donething.android.adskipper.utils.Debug
 import net.donething.android.adskipper.utils.InAppAD
 import net.donething.android.adskipper.utils.LaunchAD
-import net.donething.android.adskipper.utils.Utils
 
 class MyAccessibilityService : AccessibilityService() {
     companion object {
@@ -18,10 +16,12 @@ class MyAccessibilityService : AccessibilityService() {
         // Debug.log(Debug.D, "无障碍事件的类型：${AccessibilityEvent.eventTypeToString(event.eventType)}")
 
         // 跳过系统应用和本应用
+        /*
         if (Utils.isSysApp(this, event.packageName) || event.packageName == BuildConfig.APPLICATION_ID) {
             Debug.log(Debug.D, TAG, "跳过系统应用和本应用")
             return
         }
+         */
 
         event.eventType
 

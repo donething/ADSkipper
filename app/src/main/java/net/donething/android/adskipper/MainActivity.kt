@@ -3,8 +3,8 @@ package net.donething.android.adskipper
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
-import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import net.donething.android.adskipper.accessibility.AccessibilityUtil
@@ -20,40 +20,41 @@ class MainActivity : AppCompatActivity() {
     private var appsFragment: AppsFragment? = null
     private var prefFragment: PrefFragment? = null
 
-    private var swStatus: Switch? = null
+    private var swStatus: SwitchCompat? = null
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_logs -> {
-                if (logsFragment == null) {
-                    logsFragment = LogsFragment()
+    private val mOnNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_logs -> {
+                    if (logsFragment == null) {
+                        logsFragment = LogsFragment()
+                    }
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.content_main, logsFragment!!, "logs_fragment")
+                        .commit()
+                    return@OnNavigationItemSelectedListener true
                 }
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.content_main, logsFragment!!, "logs_fragment")
-                    .commit()
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_apps -> {
-                if (appsFragment == null) {
-                    appsFragment = AppsFragment()
+                R.id.navigation_apps -> {
+                    if (appsFragment == null) {
+                        appsFragment = AppsFragment()
+                    }
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.content_main, appsFragment!!, "apps_fragment")
+                        .commit()
+                    return@OnNavigationItemSelectedListener true
                 }
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.content_main, appsFragment!!, "apps_fragment")
-                    .commit()
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_settings -> {
-                if (prefFragment == null) {
-                    prefFragment = PrefFragment()
+                R.id.navigation_settings -> {
+                    if (prefFragment == null) {
+                        prefFragment = PrefFragment()
+                    }
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.content_main, prefFragment!!, "pref_fragment")
+                        .commit()
+                    return@OnNavigationItemSelectedListener true
                 }
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.content_main, prefFragment!!, "pref_fragment")
-                    .commit()
-                return@OnNavigationItemSelectedListener true
             }
+            false
         }
-        false
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +63,8 @@ class MainActivity : AppCompatActivity() {
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        supportFragmentManager.beginTransaction().replace(R.id.content_main, LogsFragment(), "log_fragment").commit()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.content_main, LogsFragment(), "log_fragment").commit()
     }
 
     override fun onStart() {
@@ -93,9 +95,13 @@ class MainActivity : AppCompatActivity() {
         // 不能放在onStart()中
         if (!AccessibilityUtil.isAccessibilityEnabled(MyAccessibilityService::class.java, this)) {
             Utils.buildDialog(
-                this, "打开 无障碍界面", "跳过广告功能需要激活本应用的'无障碍'开关",
-                "去打开", DialogInterface.OnClickListener { _, _ -> AccessibilityUtil.openSetting(this) },
-                "取消", DialogInterface.OnClickListener { _, _ -> swStatus?.isChecked = false }
+                this,
+                "打开 无障碍界面",
+                "跳过广告功能需要激活本应用的'无障碍'开关",
+                "去打开",
+                DialogInterface.OnClickListener { _, _ -> AccessibilityUtil.openSetting(this) },
+                "取消",
+                DialogInterface.OnClickListener { _, _ -> swStatus?.isChecked = false }
             ).show()
         }
     }

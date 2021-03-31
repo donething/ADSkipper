@@ -8,7 +8,6 @@ import net.donething.android.adskipper.entity.AppInfo
 import net.donething.android.adskipper.fragments.AppsFragment
 import net.donething.android.adskipper.interfaces.OnDataSendToActivity
 import net.donething.android.adskipper.utils.PrefsHelper
-import net.donething.android.adskipper.utils.Utils
 import java.text.Collator
 
 class GetAppsTask(
@@ -39,7 +38,7 @@ class GetAppsTask(
     }
 
     override fun onPreExecute() {
-        GetAppsTask.isDoing = true
+        isDoing = true
         appsList.clear()
         tmpAppsList.clear()
 
@@ -50,7 +49,7 @@ class GetAppsTask(
         val appsInfos = ctx.packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
         appsInfos.forEach {
             //过滤掉系统app
-            if (Utils.isSysApp(it)) return@forEach
+            // if (Utils.isSysApp(it)) return@forEach
             val appInfo = AppInfo(
                 it.packageName,
                 it.loadIcon(ctx.packageManager),

@@ -1,2 +1,3 @@
 # ADSkipper
-## 跳过Android应用的启动广告
+
+## 跳过 Android 应用的启动广告

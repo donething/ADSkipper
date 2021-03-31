@@ -9,7 +9,8 @@ import net.donething.android.adskipper.R
 import net.donething.android.adskipper.entity.AppInfo
 import net.donething.android.adskipper.utils.PrefsHelper
 
-class AppsListAdapter(ctx: Context, private var appsList: List<AppInfo>) : BaseAdapter(), Filterable {
+class AppsListAdapter(ctx: Context, private var appsList: List<AppInfo>) : BaseAdapter(),
+    Filterable {
     private val mInflater = LayoutInflater.from(ctx)
     private var originAppsList = appsList
 
@@ -89,9 +90,9 @@ class AppsListAdapter(ctx: Context, private var appsList: List<AppInfo>) : BaseA
 
     // 类
     private class ViewHolder(v: View) {
-        var icon: ImageView = v.findViewById(net.donething.android.adskipper.R.id.ivAppIcon)
-        var label: TextView = v.findViewById(net.donething.android.adskipper.R.id.tvAppLabel)
-        var launch: TextView = v.findViewById(net.donething.android.adskipper.R.id.tvappLaunch)
-        var exclude: CheckBox = v.findViewById(net.donething.android.adskipper.R.id.cbExcludeApp)
+        var icon: ImageView = v.findViewById(R.id.ivAppIcon)
+        var label: TextView = v.findViewById(R.id.tvAppLabel)
+        var launch: TextView = v.findViewById(R.id.tvappLaunch)
+        var exclude: CheckBox = v.findViewById(R.id.cbExcludeApp)
     }
 }
