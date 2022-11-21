@@ -1,19 +1,20 @@
 package net.donething.android.adskipper
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_main.*
+import com.google.android.material.navigation.NavigationBarView
 import net.donething.android.adskipper.accessibility.AccessibilityUtil
 import net.donething.android.adskipper.accessibility.MyAccessibilityService
+import net.donething.android.adskipper.databinding.ActivityMainBinding
 import net.donething.android.adskipper.fragments.AppsFragment
 import net.donething.android.adskipper.fragments.LogsFragment
 import net.donething.android.adskipper.fragments.PrefFragment
 import net.donething.android.adskipper.utils.PrefsHelper
 import net.donething.android.adskipper.utils.Utils
+
+private lateinit var binding: ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private var logsFragment: LogsFragment? = null
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private var swStatus: SwitchCompat? = null
 
     private val mOnNavigationItemSelectedListener =
-        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        NavigationBarView.OnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_logs -> {
                     if (logsFragment == null) {
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.content_main, logsFragment!!, "logs_fragment")
                         .commit()
-                    return@OnNavigationItemSelectedListener true
+                    return@OnItemSelectedListener true
                 }
                 R.id.navigation_apps -> {
                     if (appsFragment == null) {
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.content_main, appsFragment!!, "apps_fragment")
                         .commit()
-                    return@OnNavigationItemSelectedListener true
+                    return@OnItemSelectedListener true
                 }
                 R.id.navigation_settings -> {
                     if (prefFragment == null) {
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.content_main, prefFragment!!, "pref_fragment")
                         .commit()
-                    return@OnNavigationItemSelectedListener true
+                    return@OnItemSelectedListener true
                 }
             }
             false
@@ -58,10 +59,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(my_toolbar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.myToolbar)
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        binding.navigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.content_main, LogsFragment(), "log_fragment").commit()
@@ -78,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         val menuStatus = menu.findItem(R.id.menuStatus)
         menuStatus.setActionView(R.layout.menu_items)
 
-        swStatus = menuStatus.actionView.findViewById(R.id.swStatus)
+        swStatus = menuStatus.actionView?.findViewById(R.id.swStatus)
         swStatus?.isChecked = PrefsHelper.enable
 
         swStatus?.setOnCheckedChangeListener { _, isChecked ->
@@ -99,9 +101,9 @@ class MainActivity : AppCompatActivity() {
                 "打开 无障碍界面",
                 "跳过广告功能需要激活本应用的'无障碍'开关",
                 "去打开",
-                DialogInterface.OnClickListener { _, _ -> AccessibilityUtil.openSetting(this) },
+                { _, _ -> AccessibilityUtil.openSetting(this) },
                 "取消",
-                DialogInterface.OnClickListener { _, _ -> swStatus?.isChecked = false }
+                { _, _ -> swStatus?.isChecked = false }
             ).show()
         }
     }

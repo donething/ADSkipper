@@ -34,7 +34,8 @@ object Utils {
      */
     fun getAppLabel(ctx: Context, pkname: CharSequence): String {
         val packageManager = ctx.packageManager
-        val packageInfo = packageManager.getPackageInfo(pkname.toString(), PackageManager.GET_META_DATA)
+        val packageInfo =
+            packageManager.getPackageInfo(pkname.toString(), PackageManager.GET_META_DATA)
         return packageManager.getApplicationLabel(packageInfo.applicationInfo).toString()
     }
 
@@ -77,7 +78,7 @@ object Utils {
     fun copyText(text: String, label: String = BuildConfig.APPLICATION_ID) {
         val cm = MyApp.app.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val mClipData = ClipData.newPlainText(label, text)
-        cm.primaryClip = mClipData
+        cm.setPrimaryClip(mClipData)
         Toast.makeText(MyApp.app, "已复制到剪贴板", Toast.LENGTH_SHORT).show()
     }
 }

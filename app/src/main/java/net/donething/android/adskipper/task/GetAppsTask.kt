@@ -37,6 +37,7 @@ class GetAppsTask(
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onPreExecute() {
         isDoing = true
         appsList.clear()
@@ -44,6 +45,7 @@ class GetAppsTask(
 
     }
 
+    @Deprecated("Deprecated in Java")
     override fun doInBackground(vararg params: String?): String {
         val ctx = MyApp.app
         val appsInfos = ctx.packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
@@ -63,6 +65,7 @@ class GetAppsTask(
         return ""
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onPostExecute(result: String?) {
         // 按中文排序
         tmpAppsList.sortWith(c1)
