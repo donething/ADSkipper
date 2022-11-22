@@ -6,4 +6,6 @@
     <dimen name="margin_outer_5">10dp</dimen>
     <dimen name="margin_outer_10">10dp</dimen>
     <dimen name="margin_inner_5">5dp</dimen>
+
+    <dimen name="margin_pregress">30dp</dimen>
 </resources>

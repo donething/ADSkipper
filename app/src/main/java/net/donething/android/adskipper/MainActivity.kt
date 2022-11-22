@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationBarView
 import net.donething.android.adskipper.accessibility.AccessibilityUtil
 import net.donething.android.adskipper.accessibility.MyAccessibilityService
@@ -17,40 +18,92 @@ import net.donething.android.adskipper.utils.Utils
 private lateinit var binding: ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private var logsFragment: LogsFragment? = null
-    private var appsFragment: AppsFragment? = null
-    private var prefFragment: PrefFragment? = null
-
+    /**
+     * 是否开启功能
+     */
     private var swStatus: SwitchCompat? = null
+
+    /**
+     * 当前显示的页面
+     */
+    private var currentFg: Fragment? = null
+
+    /**
+     * 已实例化的页面，以供显示
+     * 键值为`页面布局文件的ID`、`页面实例`
+     */
+    private val fgMap = mutableMapOf<Int, Fragment>()
+
+    /**
+     * 根据设置的默认页面，选中对应的导航栏菜单项
+     * 键值为：`页面布局文件的ID`、`导航栏菜单项的ID`
+     */
+    private val navMap = mapOf(
+        R.layout.fragment_log to R.id.navigation_logs,
+        R.layout.fragment_apps_list to R.id.navigation_apps,
+        R.xml.preferences to R.id.navigation_settings
+    )
+
+    /**
+     * 显示指定页面
+     * @param id 页面布局文件的ID。如 `R.layout.fragment_apps_list`、`R.xml.preferences`
+     */
+    private fun toFragment(id: Int) {
+        // 用于根据默认页面，选中对应的导航栏菜单项
+        var correctID = id
+        // 先从实例映射中读取页面实例，为空时需要实例化页面，并保存到映射中
+        var fg = fgMap[id]
+        if (fg == null) {
+            fg = when (id) {
+                R.layout.fragment_log -> LogsFragment()
+                R.layout.fragment_apps_list -> AppsFragment()
+                R.xml.preferences -> PrefFragment()
+                // 默认页面、对应的导航栏菜单项
+                else -> {
+                    correctID = R.layout.fragment_apps_list
+                    AppsFragment()
+                }
+            }
+
+            // 此处不能用 ID，需要使用修正后的 correct ID，避免当返回默认页面时ID错误
+            fgMap[correctID] = fg
+        }
+
+        // 开启事务，显示页面
+        val tr = supportFragmentManager.beginTransaction()
+        // 没有被添加到过activity的页面，需要先添加
+        if (!fg.isAdded) {
+            tr.add(R.id.content_main, fg, fg::class.java.name)
+        }
+        // 当前页面不为空时，先隐藏
+        if (currentFg != null) {
+            tr.hide(currentFg!!)
+        }
+        // 显示目标页面
+        tr.show(fg)
+        tr.commit()
+
+        // 选中对应页面的导航栏菜单项
+        // 不能使用`binding.navigation.selectedItemId`，会报错
+        // @link https://stackoverflow.com/a/43246106/8179418
+        binding.navigation.menu.findItem(navMap[correctID]!!).isChecked = true
+
+        currentFg = fg
+    }
 
     private val mOnNavigationItemSelectedListener =
         NavigationBarView.OnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_logs -> {
-                    if (logsFragment == null) {
-                        logsFragment = LogsFragment()
-                    }
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.content_main, logsFragment!!, "logs_fragment")
-                        .commit()
+                    toFragment(R.layout.fragment_log)
                     return@OnItemSelectedListener true
                 }
                 R.id.navigation_apps -> {
-                    if (appsFragment == null) {
-                        appsFragment = AppsFragment()
-                    }
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.content_main, appsFragment!!, "apps_fragment")
-                        .commit()
+                    toFragment(R.layout.fragment_apps_list)
                     return@OnItemSelectedListener true
                 }
                 R.id.navigation_settings -> {
-                    if (prefFragment == null) {
-                        prefFragment = PrefFragment()
-                    }
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.content_main, prefFragment!!, "pref_fragment")
-                        .commit()
+                    toFragment(R.xml.preferences)
                     return@OnItemSelectedListener true
                 }
             }
@@ -65,8 +118,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.navigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.content_main, LogsFragment(), "log_fragment").commit()
+        // 默认页面
+        toFragment(0)
     }
 
     override fun onStart() {

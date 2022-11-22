@@ -19,10 +19,15 @@ class LogsFragment : Fragment() {
     private lateinit var lvLog: ListView
     private lateinit var adapter: ArrayAdapter<String>
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        adapter = ArrayAdapter(activity as Context, R.layout.log_item_layout, R.id.etLogItem, logsList)
+        adapter =
+            ArrayAdapter(activity as Context, R.layout.log_item_layout, R.id.etLogItem, logsList)
         val view = inflater.inflate(R.layout.fragment_log, container, false)
         lvLog = view.findViewById(R.id.lvLog)
         lvLog.adapter = adapter
@@ -52,7 +57,7 @@ class LogsFragment : Fragment() {
             ac ?: return@setOnClickListener
             Utils.buildDialog(
                 ac, "确认", "清除广告日志", "清除日志",
-                DialogInterface.OnClickListener { _, _ ->
+                { _, _ ->
                     if (PrefsHelper.clearADLog()) {
                         logsList.clear()
                         adapter.notifyDataSetChanged()

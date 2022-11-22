@@ -1,60 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
-            android:id="@+id/llAppsToolBar"
+        android:id="@+id/llAppsToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/lvApps"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvExcludedApps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_inner_5"
+            android:text="@string/apps_list_desc"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etAppsSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:elevation="10dp"
-            android:gravity="center_vertical"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/lvApps">
-        <TextView
-                android:id="@+id/tvExcludedApps"
-                android:text="@string/apps_list_desc"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_margin="@dimen/margin_inner_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        <EditText
-                android:id="@+id/etAppsSearch"
-                android:hint="@string/et_apps_search_hint"
-                android:autofillHints="no"
-                android:inputType="text"
-                android:textSize="15sp"
-                android:drawableStart="@drawable/ic_app_search"
-                android:layout_marginStart="@dimen/margin_outer_10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+            android:layout_marginStart="@dimen/margin_outer_10"
+            android:autofillHints="no"
+            android:drawableStart="@drawable/ic_app_search"
+            android:hint="@string/et_apps_search_hint"
+            android:inputType="text"
+            android:textSize="15sp" />
     </LinearLayout>
 
     <ListView
-            android:id="@+id/lvApps"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:nestedScrollingEnabled="true"
-            app:layout_constraintTop_toBottomOf="@id/llAppsToolBar"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+        android:id="@+id/lvApps"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:nestedScrollingEnabled="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llAppsToolBar" />
 
-    <ProgressBar
+    <LinearLayout
+        android:id="@+id/llProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorProgressBar"
+        android:elevation="10dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtProgress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_pregress"
+            android:layout_marginTop="@dimen/margin_outer_10"
+            android:layout_marginEnd="@dimen/margin_pregress"
+            android:gravity="center"
+            android:textSize="16sp" />
+
+        <ProgressBar
             android:id="@+id/pbGetApps"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_pregress"
+            android:layout_marginEnd="@dimen/margin_pregress"
+            android:layout_marginBottom="@dimen/margin_outer_10"
             android:gravity="center"
-            android:visibility="gone"
-            style="?android:attr/progressBarStyleLarge"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

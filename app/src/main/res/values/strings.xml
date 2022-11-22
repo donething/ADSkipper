@@ -14,4 +14,6 @@
     <string name="et_apps_search_hint">搜索应用</string>
     <string name="log_copy_desc">复制日志</string>
     <string name="log_clear_desc">清除日志</string>
+
+    <string name="pb_progress">%1$d / %2$d</string>
 </resources>

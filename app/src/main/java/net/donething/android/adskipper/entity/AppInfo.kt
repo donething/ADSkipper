@@ -6,7 +6,8 @@ data class AppInfo(
     val pkname: String,
     val icon: Drawable,
     val label: String,
-    // 应用启动activity的类名
+    // 启动应用 activity 的类名
     val launch: String,
+    // 是否为不跳过广告的应用（选择框中打钩的）
     val excluded: Boolean
 )
