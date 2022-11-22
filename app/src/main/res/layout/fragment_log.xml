@@ -1,71 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ListView
-            android:id="@+id/lvLog"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-    </ListView>
+        android:id="@+id/lvLog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-            android:id="@+id/llCtr"
+        android:id="@+id/llCtr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <!-- 箭头图标来源：https://www.iconfont.cn -->
+        <ImageButton
+            android:id="@+id/bnLogScrollUp"
+            style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-        <!-- 箭头图标来源：https://www.iconfont.cn/collections/detail?spm=a313x.7781069.1998910419.d9df05512&cid=5673 -->
-        <ImageButton
-                android:id="@+id/bnLogScrollUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/margin_inner_5"
-                android:contentDescription="@string/log_scroll_down_text"
-                android:src="@drawable/ic_log_scroll_top_32dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                style="@style/Widget.AppCompat.ImageButton"/>
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/log_scroll_down_text"
+            android:src="@drawable/ic_log_scroll_top_32dp" />
 
         <ImageButton
-                android:id="@+id/bnLogCopy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_outer_10"
-                android:padding="@dimen/margin_inner_5"
-                android:contentDescription="@string/log_copy_desc"
-                android:src="@drawable/ic_log_copy_32dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                style="@style/Widget.AppCompat.ImageButton"/>
+            android:id="@+id/bnLogCopy"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_outer_10"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/log_copy_desc"
+            android:src="@drawable/ic_log_copy_32dp" />
 
         <ImageButton
-                android:id="@+id/bnLogDel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_outer_10"
-                android:padding="@dimen/margin_inner_5"
-                android:contentDescription="@string/log_clear_desc"
-                android:src="@drawable/ic_log_del_32dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                style="@style/Widget.AppCompat.ImageButton"/>
+            android:id="@+id/bnLogDel"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_outer_10"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/log_clear_desc"
+            android:src="@drawable/ic_log_del_32dp" />
 
         <ImageButton
-                android:id="@+id/bnLogScrollDown"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_outer_10"
-                android:padding="@dimen/margin_inner_5"
-                android:contentDescription="@string/log_scroll_top_text"
-                android:src="@drawable/ic_log_scroll_bottom_32dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                style="@style/Widget.AppCompat.ImageButton"/>
+            android:id="@+id/bnLogScrollDown"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_outer_10"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/log_scroll_top_text"
+            android:src="@drawable/ic_log_scroll_bottom_32dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

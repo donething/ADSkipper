@@ -1,6 +1,7 @@
 package net.donething.android.adskipper.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,13 @@ class AppsListAdapter(ctx: Context, private var appsList: List<AppInfo>) : BaseA
             val cb = it as CheckBox
             appsList[position].excluded = cb.isChecked
             PrefsHelper.setExcludedApp(appsList[position].pkname, cb.isChecked)
+        }
+
+        // 系统应用着色强调。注意由于复用视图，非系统应用需要手动恢复原色（默认白色）
+        if (appsList[position].isSys) {
+            retView.setBackgroundColor(Color.parseColor("#DDDDDD"))
+        } else {
+            retView.setBackgroundColor(Color.parseColor("#FFFFFF"))
         }
 
         return retView

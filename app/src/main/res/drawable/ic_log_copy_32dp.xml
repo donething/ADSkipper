@@ -1,13 +1,16 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="32dp"
-        android:height="32dp"
-        android:viewportHeight="1024"
-        android:viewportWidth="1024"
-        android:alpha="0.6">
-    <path android:fillColor="#FF000000"
-          android:pathData="M640,256L192,256c-32,0 -64,32 -64,64v576c0,32 32,64 64,64h448c32,0 64,-32 64,-64L704,320c0,-32 -32,-64 -64,-64zM640,896L192,896L192,320h448v576z"/>
-    <path android:fillColor="#FF000000"
-          android:pathData="M288,512h256c19.2,0 32,-12.8 32,-32s-12.8,-32 -32,-32L288,448c-19.2,0 -32,12.8 -32,32s12.8,32 32,32zM288,640h256c19.2,0 32,-12.8 32,-32s-12.8,-32 -32,-32L288,576c-19.2,0 -32,12.8 -32,32s12.8,32 32,32zM288,768h256c19.2,0 32,-12.8 32,-32s-12.8,-32 -32,-32L288,704c-19.2,0 -32,12.8 -32,32s12.8,32 32,32z"/>
-    <path android:fillColor="#FF000000"
-          android:pathData="M832,64H384c-32,0 -64,32 -64,64v64c0,19.2 12.8,32 32,32s32,-12.8 32,-32v-64h448v576h-64c-19.2,0 -32,12.8 -32,32s12.8,32 32,32h64c32,0 64,-32 64,-64V128c0,-32 -32,-64 -64,-64z"/>
+    android:width="32dp"
+    android:height="32dp"
+    android:alpha="0.6"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M640,256L192,256c-32,0 -64,32 -64,64v576c0,32 32,64 64,64h448c32,0 64,-32 64,-64L704,320c0,-32 -32,-64 -64,-64zM640,896L192,896L192,320h448v576z" />
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M288,512h256c19.2,0 32,-12.8 32,-32s-12.8,-32 -32,-32L288,448c-19.2,0 -32,12.8 -32,32s12.8,32 32,32zM288,640h256c19.2,0 32,-12.8 32,-32s-12.8,-32 -32,-32L288,576c-19.2,0 -32,12.8 -32,32s12.8,32 32,32zM288,768h256c19.2,0 32,-12.8 32,-32s-12.8,-32 -32,-32L288,704c-19.2,0 -32,12.8 -32,32s12.8,32 32,32z" />
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M832,64H384c-32,0 -64,32 -64,64v64c0,19.2 12.8,32 32,32s32,-12.8 32,-32v-64h448v576h-64c-19.2,0 -32,12.8 -32,32s12.8,32 32,32h64c32,0 64,-32 64,-64V128c0,-32 -32,-64 -64,-64z" />
 </vector>

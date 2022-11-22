@@ -29,9 +29,13 @@ class LogsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_log, container, false)
         lvLog = view.findViewById(R.id.lvLog)
         lvLog.adapter = adapter
-        lvLog.setOnItemClickListener { _, v, _, _ ->
+
+        // 长按复制文本
+        lvLog.setOnItemLongClickListener { _, v, _, _ ->
+            // 注意`Item`指的是`log_item_layout.xml`中的布局，需要提取里面的组件（此种情况为其第一个元素）
             val tv = (v as ViewGroup)[0] as TextView
             Utils.copyText(tv.text.toString())
+            true
         }
 
         val bnScrollDown = view.findViewById<ImageButton>(R.id.bnLogScrollDown)
@@ -45,10 +49,12 @@ class LogsFragment : Fragment() {
         bnScrollUp.setOnClickListener {
             lvLog.setSelection(0)
         }
+
         // 复制日志
         bnCopyLog.setOnClickListener {
             Utils.copyText(logsList.joinToString("\n"))
         }
+
         // 清除日志
         bnClearLog.setOnClickListener {
             val ac = activity
