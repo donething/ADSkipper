@@ -42,10 +42,6 @@ class MyAccessibilityService : AccessibilityService() {
 
         // 去除应用内的广告
         InAppAD.hideAD(root)
-
-        // 回收节点实例来重用
-        eventNode.recycle()
-        root.recycle()
     }
 
     override fun onInterrupt() {}
