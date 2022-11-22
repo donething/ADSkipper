@@ -1,4 +1,4 @@
-package net.donething.android.adskipper.task
+package net.donething.android.adskipper.tasks
 
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -24,15 +24,18 @@ private val com = Collator.getInstance(java.util.Locale.CHINA)
  * 被排除的应用排在前面
  */
 private val c1: Comparator<AppInfo> = Comparator { o1, o2 ->
-    if (o2.excluded == o1.excluded) {
-        com.compare(o1.label, o2.label)
-    } else {
-        if (o1.excluded) {
-            -1
-        } else {
-            1
-        }
+    // 已排除的在前面
+    if (o2.excluded != o1.excluded) {
+        return@Comparator if (o1.excluded) -1 else 1
     }
+
+    // 系统应用在后面
+    if (o2.isSys != o1.isSys) {
+        return@Comparator if (o1.isSys) 1 else -1
+    }
+
+    // 按中文排序
+    com.compare(o1.label, o2.label)
 }
 
 /**
@@ -88,6 +91,7 @@ fun AppsFragment.getAppsList() {
                 it.loadIcon(pm),
                 it.loadLabel(pm).toString(),
                 pm.getLaunchIntentForPackage(it.packageName)!!.component!!.className,
+                it.flags and ApplicationInfo.FLAG_SYSTEM != 0,
                 PrefsHelper.isExcludedApp(it.packageName)
             )
 

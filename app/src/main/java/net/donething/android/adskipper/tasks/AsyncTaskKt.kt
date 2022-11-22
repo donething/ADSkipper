@@ -1,4 +1,4 @@
-package net.donething.android.adskipper.task
+package net.donething.android.adskipper.tasks
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

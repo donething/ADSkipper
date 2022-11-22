@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment
 import net.donething.android.adskipper.R
 import net.donething.android.adskipper.adapter.AppsListAdapter
 import net.donething.android.adskipper.entity.AppInfo
-import net.donething.android.adskipper.task.getAppsList
+import net.donething.android.adskipper.tasks.getAppsList
 
 class AppsFragment : Fragment() {
     companion object {
