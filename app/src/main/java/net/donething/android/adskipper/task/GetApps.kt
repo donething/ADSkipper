@@ -13,11 +13,6 @@ import net.donething.android.adskipper.utils.PrefsHelper
 import java.text.Collator
 
 /**
- * 正在执行任务，避免重复执行任务
- */
-private var isDoing = false
-
-/**
  * 按中文排序
  * 被排除的应用排在前面，再按中文名称排序，依次为：数字、中文、英文
  * @link https://juejin.im/entry/58ccb36b570c3500589c8809
@@ -39,6 +34,11 @@ private val c1: Comparator<AppInfo> = Comparator { o1, o2 ->
         }
     }
 }
+
+/**
+ * 正在执行任务，避免重复执行任务
+ */
+private var isDoing = false
 
 fun AppsFragment.getAppsList() {
     if (isDoing) {
