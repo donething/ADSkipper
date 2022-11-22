@@ -3,8 +3,8 @@ package net.donething.android.adskipper.accessibility
 import android.accessibilityservice.AccessibilityService
 import android.view.accessibility.AccessibilityEvent
 import net.donething.android.adskipper.utils.Debug
-import net.donething.android.adskipper.utils.InAppAD
-import net.donething.android.adskipper.utils.LaunchAD
+import net.donething.android.adskipper.tools.InAppAD
+import net.donething.android.adskipper.tools.LaunchAD
 
 class MyAccessibilityService : AccessibilityService() {
     companion object {

@@ -9,5 +9,5 @@ data class AppInfo(
     // 启动应用 activity 的类名
     val launch: String,
     // 是否为不跳过广告的应用（选择框中打钩的）
-    val excluded: Boolean
+    var excluded: Boolean
 )

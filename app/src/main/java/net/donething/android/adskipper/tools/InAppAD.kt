@@ -1,8 +1,12 @@
-package net.donething.android.adskipper.utils
+package net.donething.android.adskipper.tools
 
 import android.view.accessibility.AccessibilityNodeInfo
 import net.donething.android.adskipper.accessibility.AccessibilityUtil
+import net.donething.android.adskipper.utils.Debug
 
+/**
+ * 移除应用内的广告
+ */
 object InAppAD {
     private val TAG = InAppAD::class.java.name
 

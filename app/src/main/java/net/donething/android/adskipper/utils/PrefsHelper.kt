@@ -5,10 +5,14 @@ import android.preference.PreferenceManager
 import net.donething.android.adskipper.MyApp
 import java.io.File
 
+/**
+ * 选项页的工具
+ */
 object PrefsHelper {
     private val TAG = PrefsHelper::class.java.name
 
     private const val LOG_MAX_SIZE = 200
+
     // 广告信息（广告文本、控件）的记录文件
     private val adInfoFile = File("${MyApp.app.filesDir}/ad_info.log")
     private val prefs = PreferenceManager.getDefaultSharedPreferences(MyApp.app)
@@ -85,7 +89,7 @@ object PrefsHelper {
      */
     fun setExcludedApp(pkname: String, excluded: Boolean) {
         if (excluded) {
-            appsPrefs.edit().putBoolean(pkname, excluded).apply()
+            appsPrefs.edit().putBoolean(pkname, true).apply()
             return
         }
         appsPrefs.edit().remove(pkname).apply()

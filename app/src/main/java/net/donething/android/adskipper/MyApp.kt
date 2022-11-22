@@ -9,6 +9,9 @@ class MyApp : Application() {
     }
 
     companion object {
+        /**
+         * Application 的实例
+         */
         lateinit var app: MyApp
             private set
     }

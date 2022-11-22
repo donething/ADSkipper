@@ -1,10 +1,17 @@
-package net.donething.android.adskipper.utils
+package net.donething.android.adskipper.tools
 
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.TextView
 import net.donething.android.adskipper.MyApp
 import net.donething.android.adskipper.accessibility.AccessibilityUtil
+import net.donething.android.adskipper.utils.Constants
+import net.donething.android.adskipper.utils.Debug
+import net.donething.android.adskipper.utils.PrefsHelper
+import net.donething.android.adskipper.utils.Utils
 
+/**
+ * 移除启动页面的广告
+ */
 object LaunchAD {
     private val TAG = LaunchAD::class.java.name
 
@@ -37,12 +44,13 @@ object LaunchAD {
 
         // 记录广告文本、广告控件类型到日志文件
         for (node in nodes) {
-            // 为调试模式时，只检测TextView类型
+            // 非调试模式时，只检测TextView类型，跳过其它组件
             if (!PrefsHelper.isDebugMode && node.className != TextView::class.java.name) return
 
             // 如果需要更详细的比较，可以在这里使用：node.text=="some string"
             // 去除广告文本中的空格、换行
-            val text = node.text.toString().replace(" ", "").replace("\n", "")
+            val text = node.text.toString().replace(" ", "")
+                .replace("\n", "")
 
             // 不要用可有选项（"?"），否则匹配的内容太多，会误判
             // val pattern = """(${Constants.AD_TEXT})\d?(${Constants.AD_UNIT})?"""

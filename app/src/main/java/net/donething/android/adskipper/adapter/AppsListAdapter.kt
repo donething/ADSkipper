@@ -36,6 +36,7 @@ class AppsListAdapter(ctx: Context, private var appsList: List<AppInfo>) : BaseA
         // 参考：https://www.jianshu.com/p/b10917cdfc77
         holder.exclude.setOnClickListener {
             val cb = it as CheckBox
+            appsList[position].excluded = cb.isChecked
             PrefsHelper.setExcludedApp(appsList[position].pkname, cb.isChecked)
         }
 

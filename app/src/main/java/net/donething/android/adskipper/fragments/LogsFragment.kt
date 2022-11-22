@@ -1,7 +1,5 @@
 package net.donething.android.adskipper.fragments
 
-import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +13,8 @@ import net.donething.android.adskipper.utils.PrefsHelper
 import net.donething.android.adskipper.utils.Utils
 
 class LogsFragment : Fragment() {
-    private val logsList = mutableListOf<String>() // 日志列表
+    // 日志列表
+    private val logsList = mutableListOf<String>()
     private lateinit var lvLog: ListView
     private lateinit var adapter: ArrayAdapter<String>
 
@@ -26,8 +25,7 @@ class LogsFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        adapter =
-            ArrayAdapter(activity as Context, R.layout.log_item_layout, R.id.etLogItem, logsList)
+        adapter = ArrayAdapter(requireContext(), R.layout.log_item_layout, R.id.etLogItem, logsList)
         val view = inflater.inflate(R.layout.fragment_log, container, false)
         lvLog = view.findViewById(R.id.lvLog)
         lvLog.adapter = adapter
@@ -73,13 +71,17 @@ class LogsFragment : Fragment() {
         return view
     }
 
-    override fun onStart() {
-        super.onStart()
-
+    override fun onResume() {
+        super.onResume()
         // 显示日志
-        val v = view
-        v ?: return
         fillAllLogs()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        if (!hidden) {
+            // 显示日志
+            fillAllLogs()
+        }
     }
 
     /**
