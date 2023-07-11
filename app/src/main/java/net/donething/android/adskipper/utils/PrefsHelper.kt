@@ -1,7 +1,7 @@
 package net.donething.android.adskipper.utils
 
 import android.content.Context
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import net.donething.android.adskipper.MyApp
 import java.io.File
 
