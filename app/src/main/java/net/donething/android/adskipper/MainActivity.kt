@@ -15,8 +15,6 @@ import net.donething.android.adskipper.fragments.PrefFragment
 import net.donething.android.adskipper.utils.PrefsHelper
 import net.donething.android.adskipper.utils.Utils
 
-private lateinit var binding: ActivityMainBinding
-
 class MainActivity : AppCompatActivity() {
     /**
      * 是否开启功能
@@ -43,6 +41,61 @@ class MainActivity : AppCompatActivity() {
         R.layout.fragment_apps_list to R.id.navigation_apps,
         R.xml.preferences to R.id.navigation_settings
     )
+
+    private lateinit var binding: ActivityMainBinding
+
+    private val mOnNavigationItemSelectedListener = NavigationBarView.OnItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.navigation_logs -> {
+                toFragment(R.layout.fragment_log)
+                return@OnItemSelectedListener true
+            }
+
+            R.id.navigation_apps -> {
+                toFragment(R.layout.fragment_apps_list)
+                return@OnItemSelectedListener true
+            }
+
+            R.id.navigation_settings -> {
+                toFragment(R.xml.preferences)
+                return@OnItemSelectedListener true
+            }
+        }
+        false
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.myToolbar)
+
+        binding.navigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        // 默认页面
+        toFragment(0)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        swStatus?.isChecked = PrefsHelper.enable
+        if (PrefsHelper.enable) checkAccessibility()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        val menuStatus = menu.findItem(R.id.menuStatus)
+        menuStatus.setActionView(R.layout.menu_items)
+
+        swStatus = menuStatus.actionView?.findViewById(R.id.swStatus)
+        swStatus?.isChecked = PrefsHelper.enable
+
+        swStatus?.setOnCheckedChangeListener { _, isChecked ->
+            PrefsHelper.enable = isChecked
+            if (PrefsHelper.enable) checkAccessibility()
+        }
+        return true
+    }
 
     /**
      * 显示指定页面
@@ -91,73 +144,19 @@ class MainActivity : AppCompatActivity() {
         currentFg = fg
     }
 
-    private val mOnNavigationItemSelectedListener =
-        NavigationBarView.OnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_logs -> {
-                    toFragment(R.layout.fragment_log)
-                    return@OnItemSelectedListener true
-                }
-                R.id.navigation_apps -> {
-                    toFragment(R.layout.fragment_apps_list)
-                    return@OnItemSelectedListener true
-                }
-                R.id.navigation_settings -> {
-                    toFragment(R.xml.preferences)
-                    return@OnItemSelectedListener true
-                }
-            }
-            false
-        }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setSupportActionBar(binding.myToolbar)
-
-        binding.navigation.setOnItemSelectedListener(mOnNavigationItemSelectedListener)
-
-        // 默认页面
-        toFragment(0)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        swStatus?.isChecked = PrefsHelper.enable
-        if (PrefsHelper.enable) checkAccessibility()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        val menuStatus = menu.findItem(R.id.menuStatus)
-        menuStatus.setActionView(R.layout.menu_items)
-
-        swStatus = menuStatus.actionView?.findViewById(R.id.swStatus)
-        swStatus?.isChecked = PrefsHelper.enable
-
-        swStatus?.setOnCheckedChangeListener { _, isChecked ->
-            PrefsHelper.enable = isChecked
-            if (PrefsHelper.enable) checkAccessibility()
-        }
-        return true
-    }
-
     /**
      * 检测“无障碍”是否开启
      */
     private fun checkAccessibility() {
         // 不能放在onStart()中
         if (!AccessibilityUtil.isAccessibilityEnabled(MyAccessibilityService::class.java, this)) {
-            Utils.buildDialog(
-                this,
+            Utils.buildDialog(this,
                 "打开 无障碍界面",
                 "跳过广告功能需要激活本应用的'无障碍'开关",
                 "去打开",
                 { _, _ -> AccessibilityUtil.openSetting(this) },
                 "取消",
-                { _, _ -> swStatus?.isChecked = false }
-            ).show()
+                { _, _ -> swStatus?.isChecked = false }).show()
         }
     }
 }
